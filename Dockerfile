@@ -1,15 +1,11 @@
-FROM eclipse-temurin:17-jdk-jammy
+# Use OpenJDK 17
+FROM openjdk:17-jdk-slim
 
+# Set working directory
 WORKDIR /app
 
-COPY target/*.jar app.jar
+# Copy jar from Maven target
+COPY target/sample-java-app-1.0.0.jar app.jar
 
-RUN groupadd -r appuser && useradd -r -g appuser appuser
-
-RUN chown -R appuser:appuser /app
-
-USER appuser
-
-EXPOSE 8080
-
+# Command to run the jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
